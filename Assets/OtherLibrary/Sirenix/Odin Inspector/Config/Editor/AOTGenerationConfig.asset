@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1726182683, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
+  m_Name: AOTGenerationConfig
+  m_EditorClassIdentifier: 
+  automateBeforeBuilds: 0
+  deleteDllAfterBuilds: 0
+  AutomateForAllAOTPlatforms: 1
+  automateForPlatforms: 
+  lastScan: 637886605027396436
+  supportSerializedTypes:
+  - TypeName: Common.Configs.GamePlayConfigBase+PlayerDeadInfluence, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+AddScoreInfluence,
+      Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+ScoreInfo, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+ScoreInfoKiller,
+      Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+ScoreInfoMurder,
+      Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+Influence,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+ScoreInfoKiller,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Common.Configs.GamePlayConfigBase+PlayerDeadInfluence+ScoreInfoMurder,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: UnityEngine.Bounds, UnityEngine.CoreModule
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayCommonConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayDogTagConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayHardPointConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayPackageConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointAddPointComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointAddPointComponentConfig+AddScoreInfo, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointCommitComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: Common.Configs.GamePlayPointConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointConfigComponent, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointOccupyComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointPropertyRecoverComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointRespawnComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: GamePlayPointSpawnComponentConfig, Common
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Common.Configs.GamePlayConfigBase,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Common.Configs.GamePlayGroupConfig,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[GamePlayPointAddPointComponentConfig+AddScoreInfo,
+      Common]], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[GamePlayPointConfigComponent, Common]],
+      mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: UnityEngine.Quaternion, UnityEngine.CoreModule
+    IsCustom: 1
+    Emit: 1
+  - TypeName: System.UInt64[], mscorlib
+    IsCustom: 1
+    Emit: 1
+  - TypeName: DemoTriangleSettings+SwitchUIStep, Client
+    IsCustom: 0
+    Emit: 1
+  - TypeName: DemoTriangleSettings+UIStep, Client
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[DemoTriangleSettings+UIStep,
+      Client],[DemoTriangleSettings+SwitchUIStep, Client]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.List`1[[System.String,
+      mscorlib]], mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[DemoTriangleSettings+UIStep,
+      Client]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Single, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[DemoTriangleSettings+UIStep,
+      Client]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[System.String, mscorlib]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.String, mscorlib
+    IsCustom: 0
+    Emit: 1

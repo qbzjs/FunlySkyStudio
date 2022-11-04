@@ -1,0 +1,48 @@
+syntax = "proto3";
+option go_package = "github.com/bud-technologies/engine-protocol/game";
+
+message GetGameInfoReq {
+  string room_id                      = 1; /// [rm-sdk-para] 房间ID
+  int32  game_type                    = 2; /// 游戏类型 1 - pvp
+  int32 command                       = 3; /// 具体命令
+}
+
+message GetGameInfoRsp {
+  int32 retcode                       = 1;
+  string rmsg                         = 2;
+  string game_info                    = 3;  /// json 序列化后的游戏数据数据
+  int32  game_type                    = 4;  /// 游戏类型 1 - pvp
+  int32 command                       = 5;  /// 具体命令
+}
+
+message SendGameDataReq {
+  string room_id                      = 1; /// [rm-sdk-para] 房间ID
+  int32  req_type                     = 2; /// 请求类型
+  string game_data                    = 3; /// 序列化的游戏数据
+}
+
+message SendGameDataRsp {
+  int32  retcode                      = 1;
+  string rmsg                         = 2;
+  int32  req_type                     = 3; /// 请求类型
+  string game_data                    = 4; /// 序列化的游戏数据
+}
+
+message SendGameBst {
+  int32  req_type                     = 3; /// 请求类型
+  string game_data                    = 4; /// 序列化的游戏数据
+}
+
+enum SendGameBstReqType {
+  INVALID                             = 0; /// 无效
+  PVP_MSG                             = 1; ///
+  PVP_LOSER                           = 2; /// 出局玩家
+  Global_Leaderboard                  = 3; /// 全局排行榜
+}
+
+enum GetGameInfoCommand {
+  GET_PVP_GAME_INFO                   = 0;    /// 兼容，获取PVP游戏信息
+  GET_PLAYER_BLOOD                    = 1001; /// 获取玩家生命值
+}
+
+// protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative ./game/game.proto

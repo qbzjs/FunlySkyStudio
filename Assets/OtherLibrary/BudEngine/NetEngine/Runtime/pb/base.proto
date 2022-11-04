@@ -1,0 +1,579 @@
+syntax = "proto3";
+option go_package = "github.com/bud-technologies/engine-protocol/base";
+package BudEngine.NetEngine;
+
+///Header - 二进制格式： 0x2 + htonl(整个包长(4字节)) + ClientSendServerReq/ClientSendServerRsp+0x3  = 6bytes
+message ClientSendServerReq
+{
+  ClientSendServerReqCmd cmd		= 1; ///业务命令字
+  string seq						= 2; ///请求序列号
+  map<string, string> metadata		= 3; /// 透传数据, 例如超时时间等
+  bytes body						= 4; ///参见 AccessReq, 必填
+};
+
+///统一回包，err_code和err_msg为框架错误信息，业务错误码在body中
+message ClientSendServerRsp
+{
+  string seq		= 1; ///请求序列号
+  int32 err_code	= 2; ///错误码(0~10000为系统错误)
+  string err_msg	= 3; ///错误信息
+  bytes body		= 4; ///参见 AccessRsp
+}
+
+message ServerSendClientBst
+{
+  ServerSendClientBstType type	= 1; ///推送类型
+  string seq					= 2; ///请求序列号
+  bytes  body					= 3; ///参见 AccessReq, 必填
+};
+
+
+/// 对外命令字枚举类型（分段），由access_svr在diapatch层转换成string再透传到后端
+enum ClientSendServerReqCmd {
+
+  /////////接入层 （100-999）//////////
+  E_CMD_INVALID                = 0;   /// 保留
+  E_CMD_HEART_BEAT_REQ         = 100; /// 应用层心跳包
+
+  /////////房间类 （2000-2999）///////
+  E_CMD_CREATE_ROOM_REQ						= 2000; /// 创建房间
+  E_CMD_JOIN_ROOM_REQ						= 2001; /// 加入指定房间
+  E_CMD_QUIT_ROOM_REQ						= 2002; /// 退出房间
+  E_CMD_DISSMISS_ROOM_REQ					= 2003; /// 解散房间
+  E_CMD_GET_ROOM_DETAIL_REQ					= 2004; /// 查询房间详细信息
+  E_CMD_REMOVE_MEMBER_REQ					= 2005; /// 踢人
+  E_CMD_CHANGE_PLAYER_NETWORK_STATE_REQ		= 2006; /// 更改用户网络状态
+  E_CMD_START_FRAME_SYNC_REQ				= 2010; /// 开始帧同步
+  E_CMD_STOP_FRAME_SYNC_REQ					= 2011; /// 停止帧同步
+  E_CMD_ROOM_CHAT_REQ           = 2012; /// 房间内聊天
+  E_CMD_ENTER_ROOM_REQ						= 2013; /// 进入房间
+  E_CMD_GET_GAME_INFO_REQ         = 2014; /// 拉取房间内的游戏状态数据
+  E_CMD_SEND_GAME_DATA_REQ        = 2015; /// 房间内发送游戏数据
+
+
+  /////////匹配服务类 （3000-3999）/////////
+  E_CMD_MATCH_ROOM_SIMPLE_REQ	= 3000; // 简单房间匹配
+
+  /////////帧同步或状态同步 （4000-4999）/////////
+  E_CMD_RELAY_SEND_FRAME_REQ					= 4000; /// 帧同步输入
+  E_CMD_RELAY_REQUEST_FRAME_REQ					= 4001; /// 补帧
+  E_CMD_RELAY_CLIENT_SENDTO_GAMESVR_REQ			= 4002; /// sdk发消息给自定义扩展服务gamesvr
+  E_CMD_RELAY_CLIENT_RECV_FROM_GAMESVR_REQ		= 4003; /// 自定义扩展服务gamesvr给客户端发送消息
+}
+
+enum ServerSendClientBstType{
+  /// 通用 (0-99)
+  E_PUSH_TYPE_TEST						= 0;   /// 测试
+  E_PUSH_TYPE_RELAY						= 1;   /// 帧同步广播
+  E_PUSH_TYPE_GAMESVR					= 2;   /// 后端自定义服务gamesvr推送
+
+  /// 房间管理Push信息 (100-199)
+  E_PUSH_TYPE_CREATE_ROOM				= 100; /// 创建房间 - 自定义服务逻辑
+  E_PUSH_TYPE_JOIN_ROOM					= 101; /// 加房广播
+  E_PUSH_TYPE_LEAVE_ROOM				= 102; /// 离开房间广播
+  E_PUSH_TYPE_DISMISS_ROOM				= 103; /// 解散房间广播
+  E_PUSH_TYPE_REMOVE_PLAYER				= 104; /// 移除用户广播
+  E_PUSH_TYPE_DESTROY_ROOM				= 105; /// 销毁房间 - 自定义服务逻辑
+  E_PUSH_TYPE_NETWORK_STATE				= 106; /// 网络状态广播
+  E_PUSH_TYPE_START_GAME				= 107; /// 开始游戏广播
+  E_PUSH_TYPE_STOP_GAME					= 108; /// 结束游戏广播
+  E_PUSH_TYPE_ROOM_CHAT         = 109; /// 房间聊天广播
+  E_PUSH_TYPE_GAME              = 110; /// 房间内游戏相关广播
+};
+
+///协议系统逻辑错误码(号段0~10000),业务错误码(10001~0xFFFFFFFF)
+///90000～99999 预留给客户端
+enum ProtoErrCode {
+  ///系统框架错误
+  EC_OK						= 0;  /// 返回成功
+
+  ///90000～99999 预留给客户端
+  //////客户端错误
+  EC_SDK_SEND_FAIL			= 90001; /// 消息发送失败
+  EC_SDK_UNINIT				= 90002; /// SDK 未初始化
+  EC_SDK_RES_TIMEOUT		= 90003; /// 消息响应超时
+  EC_SDK_NO_LOGIN			= 90004; /// 登录态错误
+  EC_SDK_NO_CHECK_LOGIN		= 90005; /// 帧同步鉴权错误
+};
+
+enum ConnectionType {
+  COMMON  = 0;   ///通用
+  RELAY   = 1;   ///帧同步或状态同步
+}
+
+///心跳包body
+message HeartBeatReq
+{
+  ConnectionType con_type = 1;
+  string route_id    = 2;             ///路由ID
+  string player_id   = 3;
+}
+
+message HeartBeatRsp {}
+
+//////////////////////////////////////////////帧同步服务 or 状态同步/////////////////////////////////////////////
+message StartFrameSyncReq {
+  string room_id = 1;
+  string player_id = 2;
+}
+
+message StartFrameSyncRsp {}
+
+message StopFrameSyncReq {
+  string room_id = 1;
+  string player_id = 2;
+}
+
+message StopFrameSyncRsp {}
+
+message FrameItem {
+  string player_id    = 1;
+  string data         = 2;
+  uint64 timestamp    = 3;
+}
+
+///帧输入
+message SendFrameReq {
+  string room_id      = 1; /// [rm-sdk-para]
+  FrameItem item      = 2;
+}
+
+message SendFrameRsp {}
+
+message FrameExtInfo {
+  uint64 seed    = 1;
+}
+
+message Frame {
+  uint64 id    = 1;
+  repeated FrameItem items    = 2;
+  FrameExtInfo ext    = 3;
+}
+///补帧
+message RequestFrameReq{
+  string room_id          = 1; /// [rm-sdk-para]
+  uint64 begin_frame_id   = 2;
+  uint64 end_frame_id     = 3;
+  bool support_partial    = 4; /// [rm-sdk-para]
+}
+
+message RequestFrameRsp{
+  repeated Frame frames    = 1;
+  bool is_partial          = 2; /// 如果补帧返回数据过多，会返回部分数据，需要前端继续请求
+}
+/////////////////////////////////end of 帧同步服务 or 状态同步//////////////////////////////////
+
+
+/////////////////////////////////房间管理////////////////////////////////////////////////////////////////
+/// 网络状态
+enum NetworkState {
+  COMMON_OFFLINE  = 0; /// 房间管理玩家掉线
+  COMMON_ONLINE   = 1; /// 房间管理玩家在线
+  RELAY_OFFLINE   = 2; /// 游戏中玩家掉线
+  RELAY_ONLINE    = 3; /// 游戏中玩家在线
+  IDLE_ONLINE     = 4; /// 切后台玩家在线
+};
+
+message Certification {
+  string certName = 1;
+  string certIcon = 2;
+}
+
+message OfficialCert{
+  int32 accountClass                    = 1;
+  repeated Certification certifications = 2;
+}
+
+///玩家3D人物形象数据信息
+message ImageChosenData
+{
+  string uid                = 1;
+  string userNick           = 2;
+  string userName           = 3;
+  int64 birthDay            = 4;
+  int32 gender              = 5;
+  string portraitUrl        = 6;
+  string imageJson          = 7;
+  OfficialCert officialCert = 8; // 官方认证
+  string clothesId          = 9;
+  int32 clothesIsBan        = 10;
+}
+
+///玩家信息meta
+message PlayerInfo {
+  string id                              = 1; /// [rm-sdk-para] 用户ID（需要鉴权）
+  string name                            = 2; /// 用户名字
+  string team_id                         = 3; /// [rm-sdk-para] 归属队伍id
+  uint64 custom_player_status            = 4; /// 开发者自定义状态，客户端透传(类似：0房间中；1准备中；2游戏中)
+  string custom_profile                  = 5; /// 开发者自定义属性，用户的其他属性信息
+  NetworkState common_network_state      = 6; /// [rm-sdk-para] 用户房间控制流网络状态：0房间掉线；1房间在线
+  NetworkState relay_network_state       = 7; /// [rm-sdk-para] 用户帧同步控制流网络状态：2掉线；3在线
+  bool is_robot                          = 8; /// [rm-sdk-para] 该玩家是否为机器人
+  string player_session                  = 9; /// gamelift sessionId
+  int64 timestamp                        = 10;/// 玩家进房时间戳
+  string imageChosenDataJson             = 11;///人物3D形象数据
+  int32 spawn                            = 12; /// 玩家出生点信息
+  string lang                            = 13; /// 玩家语言码
+  string locale                          = 14; /// 玩家地区码
+  string region                          = 15; /// 玩家所在 gamelift 队组区域
+  string walletAddr                      = 16; /// 玩家钱包地址
+}
+
+/// 帧同步状态
+enum FrameSyncState {
+  STOP  = 0; /// 未开始帧同步
+  START = 1; /// 已开始帧同步
+}
+
+/// 房间信息meta
+message RoomInfo {
+  string id                      = 1; /// 房间ID
+  string name                    = 2; /// 房间名称
+  string type                    = 3; /// 房间的类型，自定义，透传
+  uint64 max_players                  = 4; /// 房间内最大用户数限制
+  string owner                        = 5; /// 房主 player_id
+  bool is_private                     = 6; /// 是否允许匹配加房
+  string custom_properties            = 7; /// 开发商自定义房间属性
+  repeated PlayerInfo player_list     = 8; /// 房间内用户列表
+  FrameSyncState frame_sync_state	  = 9; /// 房间帧同步状态：0未开始帧同步；1已开始帧同步
+  uint32 frame_rate                   = 10; /// 帧率，有效范围[5-30]
+  string route_id                     = 11; /// 路由id
+  uint64 create_time                  = 12; /// 创建房间时间
+  uint64 start_game_time              = 13; /// 开始游戏时间， 默认为0
+  bool is_forbid_join                 = 14; /// 房间是否禁止加人，默认false
+  bool is_open_blood        = 15; /// 是否开启血条功能
+  bool has_leader_board     = 16; /// 此地图是否有排行榜道具
+  string team = 17; /// 组队信息
+  repeated uint32 damage_type = 18; /// 玩家伤害来源数组（至少一个）
+  float init_blood = 19; /// 房间内玩家血量初始值
+  string locale = 20; /// 地区码
+  string lang = 21; /// 语言码
+}
+
+/*
+创建房间请求信息
+///uint64 game_id /// 游戏id，access层鉴权并放在外层协议体
+*/
+message CreateRoomReq {
+  string   room_name                    = 1; /// 房间名称
+  string   room_type                    = 2; /// 房间的类型，自定义，透传
+  uint64   max_players                  = 3; /// 房间内最大用户数限制
+  bool   is_private                     = 4; /// 是否私有
+  string   custom_properties            = 5; /// 开发商自定义房间属性
+  PlayerInfo   player_info              = 6; /// 房主用户信息
+  string   region                       = 7; /// [rm-sdk-para] 当房间为在线匹配创建的时候需要传,为owner的region
+  string   owner                        = 8; /// [rm-sdk-para] 当房间为在线匹配创建的时候需要传, owner_player_id
+  repeated   PlayerInfo player_list     = 9; /// [rm-sdk-para] 当房间为在线匹配创建的时候需要传 MATCHCREATE 匹配创建时用到, 匹配到的成员列表
+  string   session_id                   = 10; /// session id，用于 GSE 会话管理
+  string   room_id                      = 11; /// 房间 id
+  CreateRoomGameData game_data                    = 15; /// 游戏信息, GameInfo的JSON串
+}
+
+/*
+创建房间返回信息
+*/
+message CreateRoomRsp {
+  RoomInfo room_info  = 1; /// 返回创建好的房间信息，里面包含userList加入房间的用户信息列表
+  string timestamp = 2; // 时间戳
+}
+
+message CreateRoomGameData {
+  string isPvp = 1;
+  uint64 readyTime = 2;
+  uint64 gameDuration = 3;
+  int32 winType = 4;
+  bool openBlood = 5;
+  bool hasLeaderboard = 6;
+  string team = 7;
+  bool isOpenBaggage = 8;
+  repeated uint32 damageType = 9;
+  float initBlood = 10;
+  string seq = 11; // u3d透传端上的seq
+}
+
+/*
+加入房间方式
+*/
+enum JoinRoomType {
+  COMMON_JOIN     = 0; /// 游戏界面点击加入游戏
+  MATCH_JOIN      = 1; /// 匹配方式加入游戏
+}
+/*
+加入房间请求信息
+*/
+message JoinRoomReq {
+  string  room_id              = 1; /// [rm-sdk-para] roomId  1类和2类都要传
+  string  team_id              = 2; /// [rm-sdk-para] 队伍id
+  JoinRoomType join_type       = 3; /// [rm-sdk-para] 操作
+  PlayerInfo player_info       = 4; /// 申请加入房间的用户信息
+  string  session_id           = 5; /// session id，用于 GSE 会话管理
+  uint64  ready_time           = 6; /// 准备时长
+  uint64  game_duration        = 7; /// 游戏时长
+  string  is_pvp               = 8; /// 是否是 pvp 对局房间
+  string  roomType             = 9; /// 房间类型（mapId|version）
+}
+/*
+加入房间返回信息
+*/
+message JoinRoomRsp {
+  RoomInfo room_info  = 1; /// 返回加入后的房间信息，里面包含userList所有加入房间的用户信息列表
+  string timestamp = 2; //时间戳
+}
+
+/*
+离开房间请求信息
+*/
+message LeaveRoomReq {
+  /// game_id, player_id 由qapp协议体取得（接入层针对该参数鉴权）
+  /// room_id 由以后台session记录的player_id所在房间为准
+  string room_id = 1;
+  string player_id = 2;
+}
+/*
+离开房间返回信息
+*/
+message LeaveRoomRsp {
+  RoomInfo room_info  = 1; /// 房间信息
+}
+
+/*
+解散房间，即销毁房间请求信息(仅房主可操作)
+*/
+message DismissRoomReq {
+  string room_id = 1;  ///房间ID
+}
+/*
+解散房间返回信息
+*/
+message DismissRoomRsp {
+}
+
+/*
+踢人操作请求信息
+*/
+message RemovePlayerReq {
+  string remove_player_id    = 3; /// 要删除的userID
+}
+/*
+踢人操作返回信息
+*/
+message RemovePlayerRsp {
+  RoomInfo room_info          = 1; /// 房间信息
+}
+
+/*
+服务器踢人操作请求信息
+*/
+message SvrRemovePlayerReq {
+  string room_id             = 1; /// roomID
+  string remove_player_id    = 3; /// 要删除的userID
+}
+/*
+服务器踢人操作返回信息
+*/
+message SvrRemovePlayerRsp {
+  RoomInfo room_info          = 1; /// 房间信息
+}
+
+/*
+查询房间信息请求
+*/
+message GetRoomByRoomIdReq {
+  string room_id             = 1; /// 房间ID、填0则查询用户所在的房间
+  string session_id          = 2; /// 会话ID
+  string player_id           = 3; /// 玩家ID
+}
+/*
+查询房间信息返回
+*/
+message GetRoomByRoomIdRsp {
+  RoomInfo room_info         = 1; /// 房间信息
+}
+
+/*
+更改用户网络状态请求
+*/
+message ChangePlayerNetworkStateReq {
+  NetworkState network_state      = 1; /// 网络状态
+}
+message ChangePlayerNetworkStateRsp {
+  RoomInfo room_info              = 1; /// 房间信息
+}
+
+
+/*
+房间内消息发送
+*/
+message SendToClientReq {
+  string room_id                      = 1; /// [rm-sdk-para] 房间ID
+  repeated string recv_player_list    = 2; /// 接收信息的用户列表
+  string msg                          = 3; /// 消息详细内容
+  string player_id		      = 4; /// 玩家id
+}
+/*
+房间内消息返回
+*/
+message SendToClientRsp {
+  int32 msg_type = 1;   /// 消息类型
+  string data = 2;      /// 消息体，json string
+  int32 retcode = 3;
+  string rmsg = 4;
+}
+
+//////////////////////////////////////////////////////************匹配服务************///////////////////////////////////////
+
+message EnterRoomReq {
+  string room_name                    = 1; /// 房间名称
+  string room_type                    = 2; /// 房间的类型，自定义，透传
+  uint64 max_players                  = 3; /// 房间内最大用户数限制
+  bool is_private                     = 4; /// 是否私有
+  string custom_properties            = 5; /// 开发商自定义房间属性
+  PlayerInfo player_info              = 6; /// 用户信息
+  string session_id                   = 7; /// session id，用于会话管理
+  string room_id                      = 8; /// 房间 id
+  string is_pvp                       = 9; /// 是否是对局房间
+  uint64 ready_time                   = 10; /// 准备时长
+  uint64 game_duration                = 11; /// 游戏时长
+  string game_data                    = 12; /// 游戏信息, GameInfo的JSON串
+}
+
+message EnterRoomRsp {
+  RoomInfo room_info  =   1; /// 加入/创建房间的信息
+  string timestamp = 2; // 时间戳
+}
+
+enum WinType {
+  INVALID       = 0; ///
+  SWITCH        = 1; /// 开关
+  SURVIVE       = 2; /// 生存
+  SENSOR_BOX    = 3; /// 感应盒
+}
+
+/*
+房间匹配 简单模式
+*/
+message MatchRoomSimpleReq {
+  string room_type                = 1; /// 房间类型
+  uint64 max_players              = 2; /// 最大房间人数
+  PlayerInfo player_info          = 3; /// 匹配的用户信息
+  string session_id               = 4; /// session id，用于 GSE 会话管理
+  string room_id                  = 5; /// 房间 id
+}
+message MatchRoomSimpleRsp {
+  RoomInfo room_info  =   1; ///加入/创建房间的信息
+  string timestamp = 2; //时间戳
+}
+
+/*****   广播msg抽离返回信息整理（客户端） *****/
+/*
+ 创建房间 - 自定义服务通知
+ */
+message CreateRoomBst {
+  RoomInfo room_info  = 1; /// 新的房间信息
+  int32  chatId = 2;
+  string join_player_id = 3;  /// 创建房间playerId
+  string playerName = 4;
+}
+
+/*
+销毁房间 - 自定义服务通知
+*/
+message DestroyRoomBst {
+  RoomInfo room_info  = 1; /// 房间信息， 只设置roomid
+}
+
+/*
+加入房间广播（客户端）
+*/
+message JoinRoomBst {
+  RoomInfo room_info = 1; /// 新的房间信息
+  string join_player_id = 2;  /// 加入房间openid
+  int32 chatId = 3; /// 聊天ID
+  string playerName = 4;
+}
+
+/*
+退房广播信息（客户端）
+*/
+message LeaveRoomBst {
+  RoomInfo room_info          = 1; /// 新的房间信息
+  string leave_player_id      = 2;  /// 离开房间openid
+  int32 chatId = 3; /// 聊天ID
+  string playerName = 4;
+}
+
+/*
+踢人广播信息（客户端）
+*/
+message RemovePlayerBst {
+  RoomInfo room_info          = 1; /// 房间信息
+  string remove_player_id     = 2; /// 移除的用户openid
+}
+
+/*
+解散房间广播信息（客户端）
+*/
+message DismissRoomBst {
+  RoomInfo room_info   = 1; /// 房间信息， 只设置roomid
+}
+
+/*
+更改用户网络状态广播（客户端）
+*/
+message ChangePlayerNetworkStateBst {
+  string change_player_id             = 1; /// 变更的用户
+  NetworkState network_state          = 2; /// 用户状态, 包括房间内状态和游戏中状态两种（客户端区分）
+}
+
+/*
+开始帧同步的广播
+*/
+message StartFrameSyncBst {
+  RoomInfo room_info  = 1; /// 房间信息
+}
+
+/*
+结束帧同步的广播
+*/
+message StopFrameSyncBst {
+  RoomInfo room_info  = 1; /// 房间信息
+}
+
+///帧同步消息广播
+message RecvFrameBst {
+  Frame frame    = 1;
+}
+/*********  广播部分结束    ***********/
+
+/*********自定义扩展服务gamesvr*********/
+///给自定义扩展svr发送消息
+message SendToGameSvrReq {
+  string room_id      = 1; /// [rm-sdk-para]
+  string player_id    = 2; /// [rm-sdk-para]
+  string data         = 3;
+}
+
+message SendToGameSvrRsp {}
+
+///gamesvr反向推送给客户端的消息
+message RecvFromGameSvrBst {
+  string room_id                  = 1; ///必填
+  repeated string recv_player_id_list  = 2; /// 要推送的用户列表, 为空则给对局内所有成员推送
+  string data  = 3; /// 推送的内容
+}
+
+/*
+房间消息信息广播（客户端）
+*/
+message RecvFromClientBst {
+  string room_id          = 1; /// 房间id
+  string send_player_id   = 2; /// 发送信息的用户
+  string msg              = 3; /// 消息详细内容
+  int32 chatId            = 4; /// 聊天消息id
+}
+
+/******end of 自定义扩展服务gamesvr******/
+
+
+// protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative ./base/base.proto
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative ./base/base.proto

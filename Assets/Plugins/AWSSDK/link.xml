@@ -1,0 +1,6 @@
+<linker>
+    <assembly fullname="AWSSDK.Core" preserve="all"/>
+    <assembly fullname="AWSSDK.CognitoIdentity" preserve="all"/>
+    <assembly fullname="AWSSDK.S3" preserve="all"/>
+	<assembly fullname="AWSSDK.SecurityToken" preserve="all"/>
+</linker>

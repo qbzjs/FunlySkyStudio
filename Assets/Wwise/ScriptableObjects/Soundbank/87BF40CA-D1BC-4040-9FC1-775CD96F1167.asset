@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23d8aa2d73ba4ffeaee01940d992b6e, type: 3}
+  m_Name: 87BF40CA-D1BC-4040-9FC1-775CD96F1167
+  m_EditorClassIdentifier: 
+  objectName: BudSoundBank
+  id: 2708097453
+  guid: 87BF40CA-D1BC-4040-9FC1-775CD96F1167

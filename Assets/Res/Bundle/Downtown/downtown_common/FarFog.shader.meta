@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: a790c5d78c7f9c34fa68056d9f6560fa
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _FogTex: {fileID: 2800000, guid: b72814b88d9ed0540b2f36ff0459e12d, type: 3}
+  - _FogMask: {fileID: 2800000, guid: 7e058835f9f7b3a4699e4f99701f8147, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

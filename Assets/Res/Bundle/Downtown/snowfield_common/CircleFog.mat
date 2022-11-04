@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CircleFog
+  m_Shader: {fileID: 4800000, guid: eed3a7a08bde91447aec2706698b1ad7, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2450
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Cloud:
+        m_Texture: {fileID: 2800000, guid: ba5e05c0d0620004483a4d6088b1144f, type: 3}
+        m_Scale: {x: 1.4, y: 4}
+        m_Offset: {x: -1.46, y: 1.13}
+    - _Cloud2:
+        m_Texture: {fileID: 2800000, guid: ba5e05c0d0620004483a4d6088b1144f, type: 3}
+        m_Scale: {x: 1.96, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _Gradient:
+        m_Texture: {fileID: 2800000, guid: 1f30c4187ea86c447896975f141352aa, type: 3}
+        m_Scale: {x: -1, y: 1}
+        m_Offset: {x: -0.07, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: ba5e05c0d0620004483a4d6088b1144f, type: 3}
+        m_Scale: {x: 4.06, y: 4.69}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 7e058835f9f7b3a4699e4f99701f8147, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Contrast: 0.37
+    - _Float0: 1.02
+    - _Float1: 0.222
+    - _GradientStrength: 2.85
+    - _Pow: 2.569
+    - _Spd: 0.035
+    - __dirty: 0
+    - _color_int: 2.14
+    m_Colors:
+    - _Color: {r: 0.24313724, g: 0.5562, b: 0.7254902, a: 0}
+    - _Color0: {r: 0.40939838, g: 0.48093277, b: 0.754717, a: 0}
+    - _Color1: {r: 0.031372562, g: 0.40727684, b: 0.62352943, a: 0}
+    - _Vector0: {r: 1, g: 1, b: 0, a: 0}
+    - _Vector1: {r: 1, g: 1, b: 0, a: 0}
+    - _Vector12: {r: 2.37, g: 2.52, b: 1.14, a: 0.74}
+    - _Vector2: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
