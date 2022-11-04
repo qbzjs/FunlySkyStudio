@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water02
-  m_Shader: {fileID: 4800000, guid: 6c73348723f48cb40afbc4663a9fe821, type: 3}
+  m_Shader: {fileID: 4800000, guid: 8fad240ec4eb3f1489075322297f6bcd, type: 3}
   m_ShaderKeywords: _MULTIPLYOPACITY_ON _USETRANSPARENCY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -216,6 +216,7 @@ Material:
     - _hhdjt: 500
     - _kykyk: 1000
     - _opacity: 0.8
+    - _tessellation: 5
     m_Colors:
     - _CausticsColor: {r: 0.29125133, g: 0.5575275, b: 0.7264151, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

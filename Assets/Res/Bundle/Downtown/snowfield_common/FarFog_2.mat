@@ -57,10 +57,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Cutoff: 0.5
-    - _FLowSpeed: 0.0339
+    - _FLowSpeed: 0.0215
     - _Float0: 0.012
     - _FogIntensity: 0.58
-    - _TimeOffset: 0.378
+    - _TimeOffset: 0.041
     - __dirty: 0
     - _fog_distance_end: 1977.5
     - _fog_distance_end2: 1392
@@ -75,5 +75,5 @@ Material:
     m_Colors:
     - _Color0: {r: 1, g: 0, b: 0.23506641, a: 0}
     - _Color1: {r: 0.2663314, g: 0.37718672, b: 0.5377358, a: 0}
-    - _FogColor: {r: 1, g: 1, b: 1, a: 0}
+    - _FogColor: {r: 0.8160377, g: 0.9910903, b: 1, a: 0}
   m_BuildTextureStacks: []

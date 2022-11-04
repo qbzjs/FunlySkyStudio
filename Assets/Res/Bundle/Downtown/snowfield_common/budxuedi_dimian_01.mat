@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MaTex_02:
         m_Texture: {fileID: 2800000, guid: 268bb5a2ef684ac47b9844c17993577e, type: 3}
-        m_Scale: {x: 80, y: 80}
+        m_Scale: {x: 400, y: 400}
         m_Offset: {x: 0, y: 0}
     - _MaTex_02_back:
         m_Texture: {fileID: 2800000, guid: 268bb5a2ef684ac47b9844c17993577e, type: 3}
@@ -104,7 +104,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_01_R:
-        m_Texture: {fileID: 2800000, guid: 975ea34b08aa0064a9ced4d986320b77, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0370e94c3cfbcf64daa0a2986679d5c9, type: 3}
         m_Scale: {x: 150, y: 100}
         m_Offset: {x: 0, y: 0}
     - _MainTex_01_R1:
@@ -113,7 +113,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex_02_back:
         m_Texture: {fileID: 2800000, guid: 975ea34b08aa0064a9ced4d986320b77, type: 3}
-        m_Scale: {x: 80, y: 80}
+        m_Scale: {x: 400, y: 400}
         m_Offset: {x: 0, y: 0}
     - _MainTex_02_back1:
         m_Texture: {fileID: 2800000, guid: 975ea34b08aa0064a9ced4d986320b77, type: 3}
@@ -211,6 +211,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 304fe5dcc46eeeb47a8797c7736920b1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _normal_05_2u3u:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _normal_2:
         m_Texture: {fileID: 2800000, guid: a37a179e9126e9e43b17b7a90ded453f, type: 3}
         m_Scale: {x: 25, y: 25}
@@ -235,6 +239,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AO: 0
     - _AO_offon: 0
@@ -255,10 +263,10 @@ Material:
     - _MaiTex_01_S_int: 1.37
     - _MaiTex_02_Ao_int: 1
     - _MaiTex_02_M_int: 0
-    - _MaiTex_02_S_int: 0.95
+    - _MaiTex_02_S_int: 0.88
     - _MaiTex_03_Ao_int: 0
-    - _MaiTex_03_M_int: -0.21
-    - _MaiTex_03_S_int: 1.08
+    - _MaiTex_03_M_int: 0
+    - _MaiTex_03_S_int: 1.2
     - _MaiTex_04_Ao_int: 1
     - _MaiTex_04_M_int: 1
     - _MaiTex_04_S_int: 1
@@ -286,12 +294,14 @@ Material:
     - _normal_03_scale1: 1
     - _normal_04_scale: 1
     - _normal_04_scale1: 1
+    - _normal_05_2u3u: 0
     - _normal_05_2u_scale: 1
+    - _normal_05_scale: 1
     - _smoothness_all: 0
     - _smoothness_all1: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 1, g: 1, b: 1, a: 0}
+    - _Color_01: {r: 0.5521538, g: 0.7634038, b: 0.8301887, a: 0}
     - _Color_02: {r: 1, g: 1, b: 1, a: 0}
     - _Color_03: {r: 1, g: 1, b: 1, a: 0}
     - _Color_04: {r: 1, g: 1, b: 1, a: 0}

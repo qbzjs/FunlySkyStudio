@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _2ndNormalPower: 1
+    - _2ndNormalPower: 0
     - _AO: 1
     - _AO_offon: 1
     - _BlendNormals: 0
@@ -107,17 +107,20 @@ Material:
     - _Matallic_offon: 1
     - _Metallic: 0
     - _MetallicPower: 0
+    - _Metallicoffon: 0
     - _Mode: 0
     - _NormalPower: 1
     - _OcclusionPower: 0
     - _OcclusionStrength: 1
+    - _Occlusionoffon: 0
     - _Parallax: 0.02
     - _SecondNormalPower: 1
     - _SeeVertexColors: 0
     - _Smoothness: 0.2
-    - _SmoothnessPower: 0
+    - _SmoothnessPower: 0.43
     - _SmoothnessTextureChannel: 0
     - _Smoothness_offon: 1
+    - _Smoothnessoffon: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Tiling: 1
@@ -129,8 +132,8 @@ Material:
     - __dirty: 1
     - _metalic: 0
     m_Colors:
-    - _2ndColor: {r: 0.8352941, g: 1, b: 0.98039216, a: 1}
-    - _Color: {r: 0.8396226, g: 0.71542877, b: 0.67724276, a: 1}
+    - _2ndColor: {r: 0.8352941, g: 0.95686275, b: 1, a: 1}
+    - _Color: {r: 0.40489027, g: 0.39355642, b: 0.41509432, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emisson_Color: {r: 22.627417, g: 22.627417, b: 22.627417, a: 0}
   m_BuildTextureStacks: []
